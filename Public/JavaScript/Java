@@ -1,0 +1,96 @@
+const avatars = [
+  "https://i.imgur.com/1Q9Z1Zm.png",
+  "https://i.imgur.com/Db3Dj8O.png",
+  "https://i.imgur.com/ZOgfHVa.png",
+  "https://i.imgur.com/nJg9ThN.png"
+];
+
+let playerName = "لاعب";
+let playerAvatar = avatars[0];
+let points = 0;
+let currentWord = "";
+const maxPoints = 100;
+
+const words = ["قطة", "كلب", "مدرسة", "شمس", "تفاحة", "باب", "جبل", "نجمة"];
+
+const socket = io();
+
+function populateAvatars() {
+  const gallery = document.getElementById("avatar-gallery");
+  avatars.forEach((src, index) => {
+    const img = document.createElement("img");
+    img.src = src;
+    img.alt = "avatar";
+    img.onclick = () => selectAvatar(index);
+    gallery.appendChild(img);
+  });
+  selectAvatar(0);
+}
+
+function selectAvatar(index) {
+  playerAvatar = avatars[index];
+  document.getElementById("selected-avatar").src = playerAvatar;
+  document.querySelectorAll("#avatar-gallery img").forEach((img, i) => {
+    img.classList.toggle("selected", i === index);
+  });
+}
+
+document.getElementById("player-name").addEventListener("input", function () {
+  playerName = this.value || "لاعب";
+  document.getElementById("display-name").textContent = playerName;
+});
+
+function newWord() {
+  currentWord = words[Math.floor(Math.random() * words.length)];
+  document.getElementById("word").textContent = currentWord;
+}
+
+document.getElementById("answer").addEventListener("keyup", function (e) {
+  if (e.key === "Enter") {
+    const input = e.target.value.trim();
+    if (input === currentWord) {
+      points += 10;
+      e.target.value = "";
+      newWord();
+      updateScore();
+    }
+    if (points >= maxPoints) {
+      alert(`🎉 ${playerName} فاز!`);
+      points = 0;
+      updateScore();
+    }
+  }
+});
+
+function updateScore() {
+  document.getElementById("scores").textContent = `النقاط: ${points}`;
+}
+
+const chatInput = document.getElementById("chat-input");
+const chatBox = document.getElementById("chat-box");
+
+document.getElementById("send-btn").addEventListener("click", sendMessage);
+chatInput.addEventListener("keyup", function (e) {
+  if (e.key === "Enter") {
+    sendMessage();
+  }
+});
+
+function sendMessage() {
+  const message = chatInput.value.trim();
+  if (!message) return;
+  socket.emit("chat message", { name: playerName, msg: message });
+  chatInput.value = "";
+}
+
+socket.on("chat message", (data) => {
+  const div = document.createElement("div");
+  div.innerHTML = `<b>${data.name}</b>: ${data.msg}`;
+  chatBox.appendChild(div);
+  chatBox.scrollTop = chatBox.scrollHeight;
+});
+
+// بدء اللعبة
+populateAvatars();
+newWord();
+updateScore();

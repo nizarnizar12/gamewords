@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background: linear-gradient(135deg, #000000, #001f3f);
+  color: white;
+  margin: 0;
+  padding: 20px;
+  direction: rtl;
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 0 12px rgba(0, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h1, h2 {
+  text-align: center;
+  margin-top: 0;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 10px;
+  outline: none;
+  background-color: #0d223f;
+  color: white;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #0077ff;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0055aa;
+}
+
+#word {
+  font-size: 28px;
+  text-align: center;
+  margin: 20px 0;
+  font-weight: bold;
+}
+
+#scores {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+.player-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+#selected-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+}
+
+#display-name {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.avatar-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.avatar-gallery img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+}
+
+.avatar-gallery img.selected {
+  border-color: #00ccff;
+  transform: scale(1.1);
+}
+
+#chat-box {
+  height: 200px;
+  overflow-y: auto;
+  background-color: #001a33;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.chat-input-area {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
